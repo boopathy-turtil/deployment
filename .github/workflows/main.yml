@@ -1,36 +1,58 @@
-# This is a basic workflow to help you get started with Actions
+name: Build and Deploy BackendApp to ECS
 
-name: CI
-
-# Controls when the workflow will run
 on:
-  # Triggers the workflow on push or pull request events but only for the "main" branch
   push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
 
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
-
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
-  build:
-    # The type of runner that the job will run on
+  deploy:
     runs-on: ubuntu-latest
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!
+      - name: Set up QEMU for multi-arch builds
+        uses: docker/setup-qemu-action@v2
 
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-2
+
+      - name: Login to Amazon ECR
+        uses: aws-actions/amazon-ecr-login@v1
+
+      - name: Build and Push Docker Image to ECR
         run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
+          docker buildx build \
+            --platform linux/amd64,linux/arm64 \
+            -t 375949729256.dkr.ecr.us-east-2.amazonaws.com/my-ecr-repo:latest \
+            --push .
+
+      - name: Stop Existing ECS Tasks
+        run: |
+          TASK_IDS=$(aws ecs list-tasks \
+            --cluster my-fargate-service-cluster \
+            --service-name my-fargate-service \
+            --query "taskArns[]" \
+            --output text)
+          if [ -n "$TASK_IDS" ]; then
+            for TASK_ID in $TASK_IDS; do
+              aws ecs stop-task \
+                --cluster my-fargate-service-cluster \
+                --task $TASK_ID
+            done
+          fi
+
+      - name: Force New Deployment to ECS
+        run: |
+          aws ecs update-service \
+            --cluster my-fargate-service-cluster \
+            --service my-fargate-service \
+            --force-new-deployment
