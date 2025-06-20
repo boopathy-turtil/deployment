@@ -9,20 +9,20 @@ variable "service_name" {
 }
 
 variable "vpc_id" {
-  default = "vpc-0d3f7fc807218d15b"
+  default = "vpc-00565e5084c673e95"
 }
 
 variable "subnet_ids" {
   default = [
-  "subnet-00fe2bd0c30a0efd5",
-  "subnet-0adcb03cea7476613"
+  "subnet-00063f27ce0fa0a82",
+  "subnet-0ef43db73d55d5756"
 ]
 }
 
 module "ecs_fargate" {
   source         = "./modules/ecs_fargate"
   service_name   = var.service_name
-  image_url      = "033464272864.dkr.ecr.ap-south-1.amazonaws.com/dev-fast-api-repo:latest"
+  image_url      = "375949729256.dkr.ecr.ap-south-1.amazonaws.com/dev-fast-api-repo"
 
   cpu            = 1024
   memory         = 3072
