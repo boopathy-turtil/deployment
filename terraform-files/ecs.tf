@@ -2,9 +2,7 @@ variable "region" {
   default = "ap-south-1"
 }
 
-variable "ecr_repository_name" {
-  default = "my-ecr-repo"
-}
+
 
 variable "service_name" {
   default = "my-fargate-service"
