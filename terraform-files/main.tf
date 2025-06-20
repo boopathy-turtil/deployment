@@ -2,7 +2,7 @@
 terraform {
 
   backend "s3" {
-    bucket = "cms-app-terraform-be1"
+    bucket = "boopathy-devsecops-engineer"
     key    = "tf-infra/terraform.tfstate"
     region = "ap-south-1"
   }
