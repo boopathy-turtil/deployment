@@ -1,0 +1,39 @@
+# version: '3.8'
+
+# services:
+#   web:
+#     build: ./app
+#     ports:
+#       - "8000:8000"
+#     volumes:
+#       - ./app:/app
+#     environment:
+#       - PYTHONUNBUFFERED=1
+#     command: ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
+#     restart: unless-stopped
+
+# services:
+#   web:
+#     image: rajsekhar111/hello2:latest
+#     ports:
+#       - "8000:8000"
+#     # volumes:
+#     #   - ./app:/app
+#     environment:
+#       - PYTHONUNBUFFERED=1
+#     command: ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
+#     restart: unless-stopped
+ 
+
+#ECR images#
+
+services:
+  web:
+    image: 033464272864.dkr.ecr.ap-south-1.amazonaws.com/dev-fast-api-repo:latest
+    ports:
+      - "8000:8000"
+    environment:
+      - PYTHONUNBUFFERED=1
+    command: ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
+    restart: always
+                                                
