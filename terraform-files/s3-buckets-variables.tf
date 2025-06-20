@@ -2,13 +2,13 @@ variable "student_images_bucket_name" {
   type = map(map(string))
   default = {
     "dev" = {
-      "student_document" = "cms-images-upload"
+      "student_document" = "cms-images-upload-dev-20250620"
     },
     "prod" = {
-      "student_document" = "cms-images-upload"
-    }
+      "student_document" = "cms-images-upload-prod-20250620"
+    },
     "test" = {
-      "student_document" = "cms-images-upload"
+      "student_document" = "cms-images-upload-test-20250620"
     }
   }
 }
