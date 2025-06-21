@@ -66,9 +66,10 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ap-south-1
 
+
       - name: Login to ECR
         run: |
-          aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 033464272864.dkr.ecr.ap-south-1.amazonaws.com
+          aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 375949729256.dkr.ecr.ap-south-1.amazonaws.com
 
       - name: Build Docker Image
         run: |
@@ -82,29 +83,29 @@ jobs:
         run: |
           docker push 375949729256.dkr.ecr.ap-south-1.amazonaws.com/dev-fast-api-repo
 
-      - name: Refresh ASG Instances
-        if: github.event_name == 'push'
-        working-directory: ./terraform-files
-        run: |
-          ASG_NAME=$(terraform output -raw asg_name)
-          while true; do
-            STATUS=$(aws autoscaling describe-instance-refreshes \
-              --auto-scaling-group-name "$ASG_NAME" \
-              --region ${{ secrets.AWS_REGION }} \
-              --query 'InstanceRefreshes[?Status==`InProgress`].Status' \
-              --output text)
-            if [ -z "$STATUS" ]; then
-              echo "No instance refresh in progress. Proceeding with new refresh."
-              break
-            fi
-            echo "Instance refresh in progress. Waiting..."
-            sleep 50
-          done
-          aws autoscaling start-instance-refresh \
-            --auto-scaling-group-name "$ASG_NAME" \
-            --region ${{ secrets.AWS_REGION }} \
-            --strategy Rolling \
-            --preferences "MinHealthyPercentage=100,InstanceWarmup=300"
+      # - name: Refresh ASG Instances
+      #   if: github.event_name == 'push'
+      #   working-directory: ./terraform-files
+      #   run: |
+      #     ASG_NAME=$(terraform output -raw asg_name)
+      #     while true; do
+      #       STATUS=$(aws autoscaling describe-instance-refreshes \
+      #         --auto-scaling-group-name "$ASG_NAME" \
+      #         --region ${{ secrets.AWS_REGION }} \
+      #         --query 'InstanceRefreshes[?Status==`InProgress`].Status' \
+      #         --output text)
+      #       if [ -z "$STATUS" ]; then
+      #         echo "No instance refresh in progress. Proceeding with new refresh."
+      #         break
+      #       fi
+      #       echo "Instance refresh in progress. Waiting..."
+      #       sleep 50
+      #     done
+      #     aws autoscaling start-instance-refresh \
+      #       --auto-scaling-group-name "$ASG_NAME" \
+      #       --region ${{ secrets.AWS_REGION }} \
+      #       --strategy Rolling \
+      #       --preferences "MinHealthyPercentage=100,InstanceWarmup=300"
 
       # --- New ECS Deployment Steps ---
       - name: Stop Existing ECS Tasks
