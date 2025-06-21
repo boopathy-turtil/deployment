@@ -1,7 +1,7 @@
-DATABASE_URL=postgresql+psycopg2://postgres:84211248@aws-aurora-pg17-instance-1.ckzsk8dvkuy0.ap-south-1.rds.amazonaws.com
+DATABASE_URL="postgresql+psycopg2://postgres:84211248@aws-aurora-pg17-instance-1.ckzsk8dvkuy0.ap-south-1.rds.amazonaws.com"
 
-SECRET_KEY=697b36cffd3a7e3493f54e8507c436d6e709d2924c296e2aafa7d099477af05a
-ALGORITHM=HS256
+SECRET_KEY="697b36cffd3a7e3493f54e8507c436d6e709d2924c296e2aafa7d099477af05a"
+ALGORITHM="HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES=30
 
 

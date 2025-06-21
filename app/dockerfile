@@ -13,7 +13,6 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy the application code and the .env file
 COPY . .   # Copy all the files in the context
-COPY .env .env  # Ensure the .env file is copied to the container
 
 # Run the FastAPI app with Uvicorn
 CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "80"]
