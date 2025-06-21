@@ -1,18 +1,23 @@
+# Use Python 3.9 Slim as the base image
 FROM python:3.9-slim
 
-# Set the working directory
+# Set the working directory inside the container
 WORKDIR /app
 
-# Set environment variables for Python
+# Set environment variables for Python to avoid writing .pyc files and buffer output
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 
 
-# Install dependencies
-COPY requirements.txt . 
+# Create a virtual environment for the app to avoid running as root
+RUN python -m venv /venv
+ENV PATH="/venv/bin:$PATH"
+
+# Install dependencies from requirements.txt
+COPY requirements.txt /app/
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy the application code and the .env file
-COPY . .   # Copy all the files in the context
+# Copy the application code into the container
+COPY . /app/
 
-# Run the FastAPI app with Uvicorn
+# Specify the command to run the FastAPI app with Uvicorn
 CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "80"]
