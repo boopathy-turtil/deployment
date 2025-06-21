@@ -1,15 +1,19 @@
 FROM python:3.9-slim
 
+# Set the working directory
 WORKDIR /app
 
+# Set environment variables for Python
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 
 
+# Install dependencies
 COPY requirements.txt . 
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY . .
+# Copy the application code and the .env file
+COPY . .   # Copy all the files in the context
+COPY .env .env  # Ensure the .env file is copied to the container
 
-COPY /app/.env .env
-
+# Run the FastAPI app with Uvicorn
 CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "80"]
