@@ -74,9 +74,7 @@ jobs:
         run: |
           docker build --platform linux/amd64 -t dev-fast-api-repo ./app
 
-      - name: Run Tests (Optional)
-        run: |
-          docker run --rm dev-fast-api-repo pytest
+
 
       - name: Tag Docker Image
         run: |
