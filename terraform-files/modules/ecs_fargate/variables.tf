@@ -12,5 +12,5 @@ variable "subnet_ids" {
 variable "container_port" {}
 variable "aws_region" {
   type    = string
-  default = "us-east-2"  # or whatever region you're using
+  default = "ap-south-1"  # or whatever region you're using
 }
