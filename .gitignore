@@ -9,9 +9,7 @@ env/
 .venv/
 .env/
 
-# Environment variable files
-.env
-.env
+
 
 # macOS files
 .DS_Store
