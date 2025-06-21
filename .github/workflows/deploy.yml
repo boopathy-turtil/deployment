@@ -106,7 +106,7 @@ jobs:
       # Push Docker image to ECR
       - name: Push Docker Image to ECR
         run: |
-          docker push 033464272864.dkr.ecr.ap-south-1.amazonaws.com/dev-fast-api-repo:latest
+          docker push 375949729256.dkr.ecr.ap-south-1.amazonaws.com/dev-fast-api-repo
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
