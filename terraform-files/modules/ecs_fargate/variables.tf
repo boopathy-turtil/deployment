@@ -1,6 +1,6 @@
 variable "service_name" {}
 variable "image_url" {
-  default = "033464272864.dkr.ecr.ap-south-1.amazonaws.com/dev-fast-api-repo:latest"
+  default = "375949729256.dkr.ecr.ap-south-1.amazonaws.com/dev-fast-api-repo:latest"
 }
 variable "cpu" {}
 variable "memory" {}
