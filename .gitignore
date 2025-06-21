@@ -11,7 +11,7 @@ env/
 
 # Environment variable files
 .env
-*.env
+.env
 
 # macOS files
 .DS_Store
