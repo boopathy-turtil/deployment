@@ -73,7 +73,7 @@ jobs:
 
       - name: Build Docker Image
         run: |
-          docker build --platform linux/arm64 -t dev-fast-api-repo ./app
+          docker build --platform linux/amd64 -t dev-fast-api-repo ./app
 
       - name: Tag Docker Image
         run: |
