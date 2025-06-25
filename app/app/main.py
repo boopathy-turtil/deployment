@@ -37,7 +37,7 @@ from .apis.students.student import app as cms_student_router
 from .apis.imageupload.imageupload import app as cms_imageupload_router
 from .apis.listofstudents.listofstudents import app as cms_listofstudents_router
 from .apis.dynamic.dynamic import app as cms_dynamic_router
-from .apis.timeTable.api import app as cms_time_table
+from .apis.timetable.api import app as cms_time_table
 from .apis.attendence.api import app as cms_attendence
 from .apis.result.api import app as cms_result
 from .apis.assignment.api import app as cms_assignment
